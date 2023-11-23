@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Persistence.Entities;
+namespace Domain.Entities;
 
-public partial class Empleado
+public partial class Empleado : BaseEntityInt
 {
-    public int Id { get; set; }
-
     public string Nombre { get; set; } = null!;
 
     public string Apellido1 { get; set; } = null!;
 
-    public string? Apellido2 { get; set; }
+    public string Apellido2 { get; set; }
 
     public string Extension { get; set; } = null!;
 
@@ -21,11 +19,11 @@ public partial class Empleado
 
     public int? CodigoJefe { get; set; }
 
-    public string? Puesto { get; set; }
+    public string Puesto { get; set; }
 
     public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
 
-    public virtual Empleado? CodigoJefeNavigation { get; set; }
+    public virtual Empleado CodigoJefeNavigation { get; set; }
 
     public virtual Oficina CodigoOficinaNavigation { get; set; } = null!;
 

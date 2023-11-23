@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Persistence.Entities;
+namespace Domain.Entities;
 
-public partial class Pago
+public partial class Pago : BaseEntityInt
 {
-    public int Id { get; set; }
-
     public string FormaPago { get; set; } = null!;
 
     public string IdTransaccion { get; set; } = null!;
