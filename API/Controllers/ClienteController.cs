@@ -23,6 +23,7 @@ namespace API.Controllers
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _context = context;
         }
 
         [HttpGet]
@@ -98,7 +99,7 @@ namespace API.Controllers
         [HttpGet("GetClientesGamasProductos")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<ClienteDto>>> GetClientesGamasProductos()
+        public async Task<ActionResult<string>> GetClientesGamasProductos()
         {
             var results = await _context.Clientes
                 .Join(_context.Pedidos,

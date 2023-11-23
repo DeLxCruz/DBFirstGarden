@@ -23,6 +23,7 @@ namespace API.Controllers
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _context = context;
         }
 
         [HttpGet]
