@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Persistence.Entities;
+
+namespace Persistence.Data.Config
+{
+    public class GamaProductoConfig : IEntityTypeConfiguration<GamaProducto>
+    {
+        public void Configure(EntityTypeBuilder<GamaProducto> builder)
+        {
+            builder.HasKey(e => e.Id).HasName("PRIMARY");
+
+            builder.ToTable("gama_producto");
+
+            builder.Property(e => e.Id)
+                .HasMaxLength(50)
+                .HasColumnName("id");
+            builder.Property(e => e.DescripcionHtml)
+                .HasColumnType("text")
+                .HasColumnName("descripcion_html");
+            builder.Property(e => e.DescripcionTexto)
+                .HasColumnType("text")
+                .HasColumnName("descripcion_texto");
+            builder.Property(e => e.Imagen)
+                .HasMaxLength(256)
+                .HasColumnName("imagen");
+        }
+    }
+}
