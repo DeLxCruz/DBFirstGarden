@@ -9,7 +9,7 @@ public partial class Pedido : BaseEntityInt
 
     public DateOnly FechaEsperada { get; set; }
 
-    public DateOnly FechaEntrega { get; set; }
+    public DateOnly? FechaEntrega { get; set; }
 
     public string Estado { get; set; } = null!;
 

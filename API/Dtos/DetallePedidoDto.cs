@@ -10,7 +10,8 @@ namespace API.Dtos
         public int Id { get; set; }
         public int CodigoProducto { get; set; }
         public int Cantidad { get; set; }
-        public decimal Precio { get; set; }
+        public decimal PrecioUnidad { get; set; }
+        public short NumeroLinea { get; set; }
         
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Entities;
 
 namespace Persistence.Data;
 

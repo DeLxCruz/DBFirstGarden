@@ -8,6 +8,8 @@ using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -15,8 +17,9 @@ namespace API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly JardineriaContext _context;
 
-        public PedidoController(IUnitOfWork unitOfWork, IMapper mapper)
+        public PedidoController(IUnitOfWork unitOfWork, IMapper mapper, JardineriaContext context)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -47,6 +50,27 @@ namespace API.Controllers
             return _mapper.Map<PedidoDto>(nombreVariable);
         }
 
+        //      Devuelve un listado con el código de pedido, código de cliente, fecha
+        //      esperada y fecha de entrega de los pedidos que no han sido entregados a
+        //      tiempo.
+
+        [HttpGet("GetPedidosRetrasados")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Object>> GetPedidosretrasados()
+        {
+            var results = await _context.Pedidos
+            .Where(p => p.FechaEntrega > p.FechaEsperada || p.FechaEntrega == null)
+            .OrderBy(p => p.FechaEsperada)
+            .Select(p => new { p.Id, p.CodigoCliente, p.FechaEsperada, p.FechaEntrega })
+            .ToListAsync();
+            if (results == null)
+            {
+                return NotFound();
+            }
+            return Ok(results);
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -75,12 +99,12 @@ namespace API.Controllers
                 PedidoDto.Id = id;
             }
 
-            if(PedidoDto.Id != id)
+            if (PedidoDto.Id != id)
             {
                 return BadRequest();
             }
 
-            if(PedidoDto == null)
+            if (PedidoDto == null)
             {
                 return NotFound();
             }
